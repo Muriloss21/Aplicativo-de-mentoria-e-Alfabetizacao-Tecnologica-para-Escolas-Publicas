@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>ProjetoAplicativo2</name>
+=======
+	<name>ProjetoAplicativo</name>
+>>>>>>> e178c4c0ae0d3c8c3c01ac5a597351474446b708
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,4 +18,18 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+<<<<<<< HEAD
+=======
+	<filteredResources>
+		<filter>
+			<id>1778706887436</id>
+			<name></name>
+			<type>30</type>
+			<matcher>
+				<id>org.eclipse.core.resources.regexFilterMatcher</id>
+				<arguments>node_modules|\.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
+>>>>>>> e178c4c0ae0d3c8c3c01ac5a597351474446b708
 </projectDescription>
