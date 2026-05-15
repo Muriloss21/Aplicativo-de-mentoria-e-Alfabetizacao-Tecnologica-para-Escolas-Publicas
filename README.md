@@ -45,7 +45,7 @@ Além disso, o app conecta alunos a **mentores voluntários** e oferece **trilha
 
 ## Demonstração ao vivo
 
-🔗 **App publicado:** [mentoria-tech-demo.lovable.app](https://lovable.dev/projects/86ab1d7a-dfac-4ac2-a4bc-4aab760a28c0)
+🔗 **App publicado:** [[mentoria-tech-demo.lovable.app]([https://lovable.dev/projects/86ab1d7a-dfac-4ac2-a4bc-4aab760a28c0](https://pixel-perfect-clone-4625.lovable.app/)](https://pixel-perfect-clone-4625.lovable.app/))
 
 🎨 **Protótipo Figma:** [Ver no Figma](https://www.figma.com/make/CjKBynEQVHkoK0aJxvS9SH/Criar-template)
 
