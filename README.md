@@ -49,6 +49,8 @@ Além disso, o app conecta alunos a **mentores voluntários** e oferece **trilha
 
 🎨 **Protótipo Figma:** [Ver no Figma](https://www.figma.com/make/CjKBynEQVHkoK0aJxvS9SH/Criar-template)
 
+https://github.com/wallacyti/MentorIA
+
 ---
 
 ## Estrutura do repositório
