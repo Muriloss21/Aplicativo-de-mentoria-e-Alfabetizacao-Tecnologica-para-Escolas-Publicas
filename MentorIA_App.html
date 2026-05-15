@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MentorIA — Mentoria e Alfabetização Tecnológica</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--p:#6D28D9;--p2:#7C3AED;--p3:#4C1D95;--pl:#EDE9FE;--c:#0891B2;--g:#059669;--bg:#F5F3FF;--w:#fff;--t:#1F2937;--t2:#6B7280;--bd:#DDD6FE}
+body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:20px 12px}
+.phone{width:100%;max-width:400px;background:#fff;border-radius:32px;border:2px solid #C4B5FD;overflow:hidden;display:flex;flex-direction:column;min-height:calc(100vh - 40px);margin:0 auto}
+.sbar{height:48px;background:linear-gradient(135deg,#5B21B6,#7C3AED);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+.logo{color:#fff;font-size:18px;font-weight:800;letter-spacing:-0.5px}.logo em{color:#C4B5FD;font-style:normal}
+.swrap{flex:1;overflow:hidden;position:relative}
+.screen{position:absolute;inset:0;overflow-y:auto;display:flex;flex-direction:column;transform:translateX(100%);opacity:0;transition:transform .28s cubic-bezier(.4,0,.2,1),opacity .28s;background:var(--bg)}
+.screen.active{transform:translateX(0);opacity:1}
+.screen.exit{transform:translateX(-100%);opacity:0}
+.s-top{padding:16px 18px 20px;flex-shrink:0;color:#fff}
+.s-top.purple{background:linear-gradient(135deg,#5B21B6,#7C3AED)}
+.s-top.cyan{background:linear-gradient(135deg,#0E7490,#0891B2)}
+.s-top.green{background:linear-gradient(135deg,#065F46,#059669)}
+.s-top.dark{background:linear-gradient(135deg,#111827,#374151)}
+.s-top h2{font-size:20px;font-weight:700}
+.s-top p{font-size:13px;opacity:.85;margin-top:2px}
+.back{background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:10px;padding:6px 14px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin-bottom:10px;font-family:inherit}
+.sbody{flex:1;padding:14px}
+.card{background:#fff;border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid var(--bd)}
+.abtn{width:100%;padding:14px 16px;border-radius:14px;border:none;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:10px;text-align:left;font-family:inherit;transition:opacity .15s,transform .1s}
+.abtn:active{transform:scale(.98);opacity:.88}
+.abtn .ic{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.abtn .tx{flex:1}.abtn .tx small{display:block;font-size:11px;font-weight:400;opacity:.75;margin-top:1px}
+.bp{background:var(--p);color:#fff}
+.bc{background:#0891B2;color:#fff}
+.bg2{background:#059669;color:#fff}
+.upload{border:2px dashed #C4B5FD;border-radius:14px;padding:24px;text-align:center;cursor:pointer;background:var(--pl);position:relative;transition:border-color .2s,background .2s;margin-bottom:10px}
+.upload:hover{border-color:var(--p);background:#E5E0FD}
+.upload input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload .lic{font-size:40px;display:block;margin-bottom:8px}
+.upload p{color:var(--p);font-size:14px;font-weight:600}
+.upload span{color:var(--t2);font-size:12px;display:block;margin-top:3px}
+#img-preview{width:100%;border-radius:12px;max-height:220px;object-fit:cover;margin-bottom:12px;display:none;border:1px solid var(--bd)}
+textarea{width:100%;border:1px solid var(--bd);border-radius:12px;padding:12px;font-size:14px;resize:none;background:#fff;color:var(--t);font-family:inherit;margin-bottom:10px}
+textarea:focus{outline:none;border-color:var(--p)}
+.loading{display:none;align-items:center;gap:10px;padding:14px;color:var(--p);font-size:13px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:20px;height:20px;border:2px solid var(--pl);border-top-color:var(--p);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+.resp{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:14px;padding:14px;display:none}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.resp.show{display:block;animation:fadein .3s}
+.resp h4{color:#065F46;font-size:13px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.resp-text{color:#047857;font-size:13px;line-height:1.7;white-space:pre-wrap}
+.err{background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:12px;display:none;font-size:13px;color:#991B1B}
+.err.show{display:block}
+.r-btns{display:flex;gap:8px;margin-top:10px}
+.r-btn{flex:1;padding:9px;border:1px solid var(--bd);border-radius:10px;background:#fff;font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s}
+.r-btn:hover{background:var(--pl);border-color:var(--p);color:var(--p)}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.9}}
+.mic-wrap{display:flex;flex-direction:column;align-items:center;padding:24px 0 16px}
+.mic{width:80px;height:80px;border-radius:50%;border:none;font-size:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;background:var(--p);color:#fff;transition:background .3s;font-family:inherit}
+.mic.rec{background:#DC2626;animation:pulse 1.1s ease-in-out infinite}
+.mic.rec::after{content:'';position:absolute;inset:-12px;border-radius:50%;border:2px solid rgba(220,38,38,.3);animation:pulse 1.1s ease-in-out infinite}
+.mic-label{font-size:12px;color:var(--t2);margin-top:10px;text-align:center}
+.transcript{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:12px;padding:12px;min-height:80px;font-size:13px;color:#374151;line-height:1.6;margin-bottom:10px;font-style:italic}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:#fff;border-radius:12px;padding:12px 6px;text-align:center;border:1px solid var(--bd)}
+.stat .n{font-size:24px;font-weight:700;color:var(--p)}
+.stat .l{font-size:10px;color:var(--t2);margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
+.section-lbl{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;margin-top:4px}
+.mentor-card{background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:8px;border:1px solid var(--bd);display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .2s}
+.mentor-card:hover{border-color:var(--p)}
+.av{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
+.minfo h4{font-size:13px;font-weight:600;color:var(--t)}
+.minfo p{font-size:11px;color:var(--t2)}
+.mbadge{background:var(--pl);color:var(--p);font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;display:inline-block;margin-top:3px}
+.dot{width:8px;height:8px;border-radius:50%;background:#10B981;margin-left:auto;flex-shrink:0}
+.dot.off{background:#9CA3AF}
+.warn{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:10px 12px;font-size:12px;color:#92400E;margin-bottom:10px;display:flex;gap:6px;align-items:flex-start}
+.tabs{display:flex;background:#fff;border-top:1px solid var(--bd);padding:6px 0 2px;flex-shrink:0}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;border:none;background:none;cursor:pointer;padding:6px 4px;color:#9CA3AF;font-size:9px;font-weight:600;transition:color .2s;font-family:inherit;text-transform:uppercase;letter-spacing:.3px}
+.tab.act{color:var(--p)}
+.tab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="sbar">
+    <div class="logo">Mentor<em>IA</em></div>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+  </div>
+
+  <div class="swrap">
+
+    <!-- HOME -->
+    <div id="s-home" class="screen active">
+      <div class="s-top purple">
+        <div style="font-size:12px;opacity:.75;margin-bottom:4px">🤖 Mentor de tecnologia com IA</div>
+        <h2>Olá! Posso ajudar? 👋</h2>
+        <p>Envie uma foto ou diga sua dúvida de tecnologia</p>
+      </div>
+      <div class="sbody">
+        <div class="stats">
+          <div class="stat"><div class="n">247</div><div class="l">Ajudados</div></div>
+          <div class="stat"><div class="n">12</div><div class="l">Mentores</div></div>
+          <div class="stat"><div class="n">4.9</div><div class="l">Avaliação</div></div>
+        </div>
+        <div class="section-lbl">Como quer pedir ajuda?</div>
+        <button class="abtn bp" onclick="ir('s-foto')">
+          <div class="ic">📷</div>
+          <div class="tx">Enviar uma foto<small>Foto da tela ou do aparelho</small></div>
+        </button>
+        <button class="abtn bc" onclick="ir('s-voz')">
+          <div class="ic">🎙️</div>
+          <div class="tx">Falar minha dúvida<small>Diga em voz alta</small></div>
+        </button>
+        <button class="abtn" style="background:#7C3AED;color:#fff" onclick="ir('s-texto')">
+          <div class="ic">✍️</div>
+          <div class="tx">Digitar a pergunta<small>Escreva sua dúvida</small></div>
+        </button>
+        <div class="section-lbl" style="margin-top:4px">Mentores disponíveis agora</div>
+        <div class="mentor-card" onclick="ir('s-mentores')">
+          <div class="av" style="background:#7C3AED">AM</div>
+          <div class="minfo"><h4>Ana Mello</h4><p>Celular e redes</p><span class="mbadge">Android & iOS</span></div>
+          <div class="dot"></div>
+        </div>
+        <div class="mentor-card" onclick="ir('s-mentores')">
+          <div class="av" style="background:#0891B2">CR</div>
+          <div class="minfo"><h4>Carlos Rocha</h4><p>Computadores e internet</p><span class="mbadge">Windows & Mac</span></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOTO -->
+    <div id="s-foto" class="screen">
+      <div class="s-top purple">
+        <button class="back" onclick="ir('s-home')">← Voltar</button>
+        <h2>📷 Enviar foto</h2>
+        <p>Tire foto da tela ou do problema</p>
+      </div>
+      <div class="sbody">
+        <div class="warn">⚠️ A IA vai analisar a imagem e explicar em linguagem simples o que está vendo.</div>
+        <div class="upload" id="upload-area">
+          <input type="file" accept="image/*" id="file-in" onchange="onFile(this)">
+          <span class="lic">📁</span>
+          <p>Toque para escolher foto</p>
+          <span>JPG, PNG — qualquer tela ou aparelho</span>
+        </div>
+        <img id="img-preview" alt="Preview">
+        <div class="section-lbl">Pergunta adicional (opcional)</div>
+        <textarea id="foto-q" rows="2" placeholder="Ex: como faço para aumentar a fonte?"></textarea>
+        <button class="abtn bp" id="btn-foto" onclick="analisarFoto()" style="display:none">
+          <div class="ic">🔍</div>
+          <div class="tx">Analisar com IA<small>Resposta em segundos</small></div>
+        </button>
+        <div class="loading" id="load-foto"><div class="spinner"></div>Analisando imagem...</div>
+        <div class="resp" id="resp-foto"><h4>🤖 Resposta do MentorIA</h4><div class="resp-text" id="resp-foto-txt"></div><div class="r-btns"><button class="r-btn">👍 Ajudou!</button><button class="r-btn" onclick="resetFoto()">🔁 Nova foto</button></div></div>
+        <div class="err" id="err-foto"></div>
+      </div>
+    </div>
+
+    <!-- VOZ -->
+    <div id="s-voz" class="screen">
+      <div class="s-top cyan">
+        <button class="back" onclick="ir('s-home')">← Voltar</button>
+        <h2>🎙️ Falar minha dúvida</h2>
+        <p>Toque no microfone e fale</p>
+      </div>
+      <div class="sbody">
+        <div class="warn">⚠️ Funciona no Chrome e Edge. O texto aparece enquanto você fala.</div>
+        <div class="mic-wrap">
+          <button class="mic" id="mic-btn" onclick="toggleRec()">🎙️</button>
+          <div class="mic-label" id="mic-label">Toque para gravar</div>
+        </div>
+        <div class="section-lbl">O que você disse:</div>
+        <div class="transcript" id="transcript">Toque no microfone para começar...</div>
+        <button class="abtn bc" id="btn-voz" onclick="enviarVoz()" style="display:none">
+          <div class="ic">📤</div>
+          <div class="tx">Enviar para o MentorIA<small>Vai analisar sua dúvida</small></div>
+        </button>
+        <div class="loading" id="load-voz"><div class="spinner"></div>Processando sua dúvida...</div>
+        <div class="resp" id="resp-voz"><h4>🤖 Resposta do MentorIA</h4><div class="resp-text" id="resp-voz-txt"></div><div class="r-btns"><button class="r-btn">👍 Ajudou!</button><button class="r-btn" onclick="resetVoz()">🔁 Nova pergunta</button></div></div>
+        <div class="err" id="err-voz"></div>
+      </div>
+    </div>
+
+    <!-- TEXTO -->
+    <div id="s-texto" class="screen">
+      <div class="s-top green">
+        <button class="back" onclick="ir('s-home')">← Voltar</button>
+        <h2>✍️ Digitar pergunta</h2>
+        <p>Escreva sua dúvida de tecnologia</p>
+      </div>
+      <div class="sbody">
+        <div class="section-lbl">Qual é sua dúvida?</div>
+        <textarea id="texto-q" rows="5" placeholder="Ex: Como entro no wifi? Como aumento o volume? Como acesso o e-mail?"></textarea>
+        <button class="abtn bg2" onclick="enviarTexto()">
+          <div class="ic">🚀</div>
+          <div class="tx">Enviar para o MentorIA<small>Resposta rápida e simples</small></div>
+        </button>
+        <div class="loading" id="load-texto"><div class="spinner"></div>Preparando resposta...</div>
+        <div class="resp" id="resp-texto"><h4>🤖 Resposta do MentorIA</h4><div class="resp-text" id="resp-texto-txt"></div><div class="r-btns"><button class="r-btn">👍 Ajudou!</button><button class="r-btn" onclick="resetTexto()">🔁 Nova pergunta</button></div></div>
+        <div class="err" id="err-texto"></div>
+      </div>
+    </div>
+
+    <!-- MENTORES -->
+    <div id="s-mentores" class="screen">
+      <div class="s-top dark">
+        <button class="back" onclick="ir('s-home')">← Voltar</button>
+        <h2>👥 Mentores</h2>
+        <p>Voluntários disponíveis para ajudar</p>
+      </div>
+      <div class="sbody">
+        <div class="section-lbl">Online agora</div>
+        <div class="mentor-card"><div class="av" style="background:#7C3AED">AM</div><div class="minfo"><h4>Ana Mello</h4><p>Celular, redes, apps</p><span class="mbadge">4.9★ · 89 ajudados</span></div><div class="dot"></div></div>
+        <div class="mentor-card"><div class="av" style="background:#0891B2">CR</div><div class="minfo"><h4>Carlos Rocha</h4><p>PC, Windows, Internet</p><span class="mbadge">4.8★ · 67 ajudados</span></div><div class="dot"></div></div>
+        <div class="mentor-card"><div class="av" style="background:#059669">FS</div><div class="minfo"><h4>Fernanda Santos</h4><p>E-mail, redes sociais</p><span class="mbadge">5.0★ · 42 ajudados</span></div><div class="dot"></div></div>
+        <div class="section-lbl" style="margin-top:8px">Offline</div>
+        <div class="mentor-card" style="opacity:.55"><div class="av" style="background:#9CA3AF">JP</div><div class="minfo"><h4>João Paulo</h4><p>Impressoras, câmeras</p><span class="mbadge">4.7★</span></div><div class="dot off"></div></div>
+        <div class="mentor-card" style="opacity:.55"><div class="av" style="background:#9CA3AF">ML</div><div class="minfo"><h4>Mariana Lima</h4><p>iPhone, Mac, iCloud</p><span class="mbadge">4.9★</span></div><div class="dot off"></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tabs">
+    <button class="tab act" id="tab-home" onclick="ir('s-home');setTab(this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Início
+    </button>
+    <button class="tab" id="tab-foto" onclick="ir('s-foto');setTab(this)">
+      <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Foto
+    </button>
+    <button class="tab" id="tab-voz" onclick="ir('s-voz');setTab(this)">
+      <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Voz
+    </button>
+    <button class="tab" id="tab-mentores" onclick="ir('s-mentores');setTab(this)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Mentores
+    </button>
+  </div>
+</div>
+
+<script>
+let cur='s-home', recog=null, isRec=false, finalTxt='';
+
+function ir(id){
+  if(id===cur)return;
+  const prev=document.getElementById(cur);
+  const next=document.getElementById(id);
+  prev.classList.add('exit');
+  setTimeout(()=>prev.classList.remove('active','exit'),280);
+  next.classList.add('active');
+  cur=id;
+}
+
+function setTab(el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('act'));
+  el.classList.add('act');
+}
+
+function show(id,v){
+  const el=document.getElementById(id);
+  if(!el)return;
+  if(id.startsWith('load'))el.style.display=v?'flex':'none';
+  else el.style.display=v?'block':'none';
+}
+
+function onFile(input){
+  const f=input.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const p=document.getElementById('img-preview');
+    p.src=e.target.result; p.style.display='block';
+    document.getElementById('upload-area').style.display='none';
+    document.getElementById('btn-foto').style.display='flex';
+    show('resp-foto',false); show('err-foto',false);
+  };
+  r.readAsDataURL(f);
+}
+
+function resetFoto(){
+  document.getElementById('img-preview').style.display='none';
+  document.getElementById('upload-area').style.display='block';
+  document.getElementById('btn-foto').style.display='none';
+  document.getElementById('file-in').value='';
+  show('resp-foto',false); show('err-foto',false);
+}
+
+async function analisarFoto(){
+  const f=document.getElementById('file-in').files[0]; if(!f)return;
+  const q=document.getElementById('foto-q').value||'Analise esta imagem e explique de forma simples o que está vendo. Se for uma tela, explique como usar. Se houver algum problema, diga como resolver passo a passo.';
+  show('load-foto',true); show('resp-foto',false); show('err-foto',false);
+  try{
+    const b64=await toB64(f);
+    const txt=await callAI([{role:'user',content:[
+      {type:'image',source:{type:'base64',media_type:f.type||'image/jpeg',data:b64}},
+      {type:'text',text:q}
+    ]}]);
+    document.getElementById('resp-foto-txt').textContent=txt;
+    show('resp-foto',true);
+  }catch(e){
+    const err=document.getElementById('err-foto');
+    err.textContent='Erro ao analisar: '+e.message; show('err-foto',true);
+  }finally{show('load-foto',false);}
+}
+
+function toB64(file){
+  return new Promise((ok,er)=>{
+    const r=new FileReader();
+    r.onload=e=>ok(e.target.result.split(',')[1]);
+    r.onerror=()=>er(new Error('Falha ao ler arquivo'));
+    r.readAsDataURL(file);
+  });
+}
+
+async function enviarTexto(){
+  const q=document.getElementById('texto-q').value.trim();
+  if(!q){alert('Digite sua pergunta!');return;}
+  show('load-texto',true); show('resp-texto',false); show('err-texto',false);
+  try{
+    const txt=await callAI([{role:'user',content:[{type:'text',text:q}]}]);
+    document.getElementById('resp-texto-txt').textContent=txt;
+    show('resp-texto',true);
+  }catch(e){
+    const err=document.getElementById('err-texto');
+    err.textContent='Erro: '+e.message; show('err-texto',true);
+  }finally{show('load-texto',false);}
+}
+
+function resetTexto(){document.getElementById('texto-q').value='';show('resp-texto',false);show('err-texto',false);}
+
+async function enviarVoz(){
+  const q=document.getElementById('transcript').textContent.trim();
+  if(!q||q==='Toque no microfone para começar...')return;
+  show('load-voz',true); show('resp-voz',false); show('err-voz',false); show('btn-voz',false);
+  try{
+    const txt=await callAI([{role:'user',content:[{type:'text',text:q}]}]);
+    document.getElementById('resp-voz-txt').textContent=txt;
+    show('resp-voz',true);
+  }catch(e){
+    const err=document.getElementById('err-voz');
+    err.textContent='Erro: '+e.message; show('err-voz',true);
+  }finally{show('load-voz',false);}
+}
+
+function resetVoz(){
+  document.getElementById('transcript').textContent='Toque no microfone para começar...';
+  show('resp-voz',false); show('btn-voz',false); finalTxt='';
+}
+
+function toggleRec(){isRec?stopRec():startRec();}
+
+function startRec(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){document.getElementById('transcript').textContent='Use o Google Chrome para ativar o microfone.';return;}
+  recog=new SR(); recog.lang='pt-BR'; recog.continuous=true; recog.interimResults=true; finalTxt='';
+  recog.onresult=e=>{
+    let interim='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal)finalTxt+=e.results[i][0].transcript+' ';
+      else interim+=e.results[i][0].transcript;
+    }
+    document.getElementById('transcript').textContent=(finalTxt+interim)||'Ouvindo...';
+  };
+  recog.onerror=()=>stopRec();
+  recog.onend=()=>{if(isRec)recog.start();};
+  recog.start(); isRec=true;
+  document.getElementById('mic-btn').classList.add('rec');
+  document.getElementById('mic-btn').textContent='⏹️';
+  document.getElementById('mic-label').textContent='Gravando... toque para parar';
+  show('btn-voz',false);
+}
+
+function stopRec(){
+  if(recog){recog.onend=null;recog.stop();}
+  isRec=false;
+  document.getElementById('mic-btn').classList.remove('rec');
+  document.getElementById('mic-btn').textContent='🎙️';
+  document.getElementById('mic-label').textContent='Toque para gravar novamente';
+  if(finalTxt.trim())show('btn-voz',true);
+}
+
+async function callAI(messages){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:1000,
+      system:`Você é o MentorIA, um mentor de tecnologia muito amigável e paciente.
+Ajude pessoas comuns (avós, pessoas sem experiência técnica) a entender e usar tecnologia.
+Use linguagem MUITO simples, sem jargões técnicos. Se precisar usar um termo técnico, explique entre parênteses.
+Se for uma foto/imagem: descreva o que está vendo e explique passo a passo.
+Responda em português brasileiro.
+Seja encorajador e positivo. Máximo 4 parágrafos curtos. Use emojis para ser mais amigável.`,
+      messages
+    })
+  });
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Erro na API ('+res.status+')');}
+  const d=await res.json();
+  return d.content?.map(c=>c.text).filter(Boolean).join('')||'Sem resposta.';
+}
+</script>
+</body>
+</html>

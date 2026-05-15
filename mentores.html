@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MentorIA — Mentores</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#6D28D9;--pl:#EDE9FE;--t:#1F2937;--t2:#6B7280;--bd:#DDD6FE;--bg:#F5F3FF}
+body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;justify-content:center;padding:20px 12px;min-height:100vh}
+.phone{width:100%;max-width:400px;background:#fff;border-radius:32px;border:2px solid #C4B5FD;overflow:hidden;display:flex;flex-direction:column;min-height:calc(100vh - 40px)}
+.sbar{height:48px;background:linear-gradient(135deg,#5B21B6,#7C3AED);display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.logo{color:#fff;font-size:18px;font-weight:800}.logo em{color:#C4B5FD;font-style:normal}
+.s-top{background:linear-gradient(135deg,#111827,#374151);padding:16px 18px 20px;color:#fff;flex-shrink:0}
+.s-top h2{font-size:20px;font-weight:700}
+.s-top p{font-size:13px;opacity:.8;margin-top:2px}
+.sbody{flex:1;padding:14px;overflow-y:auto}
+.section-lbl{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.mentor-card{background:#fff;border-radius:16px;padding:16px;margin-bottom:10px;border:1px solid var(--bd);cursor:pointer;transition:border-color .2s,transform .1s}
+.mentor-card:hover{border-color:var(--p);transform:translateY(-1px)}
+.mentor-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
+.minfo h4{font-size:14px;font-weight:600;color:var(--t)}
+.minfo p{font-size:12px;color:var(--t2)}
+.status{display:flex;align-items:center;gap:5px;margin-top:3px;font-size:11px}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot.on{background:#10B981}.dot.off{background:#9CA3AF}
+.status.on{color:#059669}.status.off{color:#9CA3AF}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tag{background:var(--pl);color:var(--p);font-size:10px;font-weight:500;padding:3px 10px;border-radius:20px}
+.stars{color:#F59E0B;font-size:13px;margin-bottom:10px}
+.stars span{color:var(--t2);font-size:11px;margin-left:4px}
+.btn-solicitar{width:100%;padding:12px;background:var(--p);color:#fff;border:none;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-solicitar:hover{opacity:.88}
+.btn-solicitar.off{background:#9CA3AF;cursor:not-allowed}
+.back-bar{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--bd)}
+.back-btn{background:none;border:none;color:var(--p);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="sbar">
+    <div class="logo">Mentor<em>IA</em></div>
+  </div>
+  <div class="s-top">
+    <h2>👥 Mentores</h2>
+    <p>Voluntários disponíveis para ajudar você</p>
+  </div>
+  <div class="back-bar">
+    <button class="back-btn" onclick="history.back()">← Voltar ao app</button>
+  </div>
+  <div class="sbody">
+    <div class="section-lbl">Online agora</div>
+
+    <div class="mentor-card">
+      <div class="mentor-head">
+        <div class="av" style="background:#7C3AED">AM</div>
+        <div class="minfo">
+          <h4>Ana Mello</h4>
+          <p>Especialista em celular e redes</p>
+          <div class="status on"><div class="dot on"></div>Online agora</div>
+        </div>
+      </div>
+      <div class="stars">★★★★★ <span>4.9 · 89 ajudados</span></div>
+      <div class="tags">
+        <span class="tag">Android</span>
+        <span class="tag">iOS</span>
+        <span class="tag">Wi-Fi</span>
+        <span class="tag">WhatsApp</span>
+      </div>
+      <button class="btn-solicitar">Solicitar mentoria</button>
+    </div>
+
+    <div class="mentor-card">
+      <div class="mentor-head">
+        <div class="av" style="background:#0891B2">CR</div>
+        <div class="minfo">
+          <h4>Carlos Rocha</h4>
+          <p>Computadores e internet</p>
+          <div class="status on"><div class="dot on"></div>Online agora</div>
+        </div>
+      </div>
+      <div class="stars">★★★★★ <span>4.8 · 67 ajudados</span></div>
+      <div class="tags">
+        <span class="tag">Windows</span>
+        <span class="tag">Mac</span>
+        <span class="tag">Internet</span>
+        <span class="tag">E-mail</span>
+      </div>
+      <button class="btn-solicitar">Solicitar mentoria</button>
+    </div>
+
+    <div class="mentor-card">
+      <div class="mentor-head">
+        <div class="av" style="background:#059669">FS</div>
+        <div class="minfo">
+          <h4>Fernanda Santos</h4>
+          <p>E-mail, redes sociais e YouTube</p>
+          <div class="status on"><div class="dot on"></div>Online agora</div>
+        </div>
+      </div>
+      <div class="stars">★★★★★ <span>5.0 · 42 ajudados</span></div>
+      <div class="tags">
+        <span class="tag">Instagram</span>
+        <span class="tag">YouTube</span>
+        <span class="tag">Gmail</span>
+        <span class="tag">Facebook</span>
+      </div>
+      <button class="btn-solicitar">Solicitar mentoria</button>
+    </div>
+
+    <div class="section-lbl" style="margin-top:8px">Offline</div>
+
+    <div class="mentor-card" style="opacity:.6">
+      <div class="mentor-head">
+        <div class="av" style="background:#9CA3AF">JP</div>
+        <div class="minfo">
+          <h4>João Paulo</h4>
+          <p>Impressoras, câmeras e scanners</p>
+          <div class="status off"><div class="dot off"></div>Offline</div>
+        </div>
+      </div>
+      <div class="stars" style="color:#D1D5DB">★★★★☆ <span>4.7 · 31 ajudados</span></div>
+      <div class="tags"><span class="tag" style="background:#F3F4F6;color:#9CA3AF">Impressoras</span><span class="tag" style="background:#F3F4F6;color:#9CA3AF">Câmeras</span></div>
+      <button class="btn-solicitar off" disabled>Indisponível agora</button>
+    </div>
+
+    <div class="mentor-card" style="opacity:.6">
+      <div class="mentor-head">
+        <div class="av" style="background:#9CA3AF">ML</div>
+        <div class="minfo">
+          <h4>Mariana Lima</h4>
+          <p>iPhone, Mac e iCloud</p>
+          <div class="status off"><div class="dot off"></div>Offline</div>
+        </div>
+      </div>
+      <div class="stars" style="color:#D1D5DB">★★★★★ <span>4.9 · 55 ajudados</span></div>
+      <div class="tags"><span class="tag" style="background:#F3F4F6;color:#9CA3AF">iPhone</span><span class="tag" style="background:#F3F4F6;color:#9CA3AF">iCloud</span></div>
+      <button class="btn-solicitar off" disabled>Indisponível agora</button>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
